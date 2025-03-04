@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hey Moonbeam Greeting App
 
-## Getting Started
+This Next.js application displays personalized greetings and motivational quotes based on the time of day, using the Deepseek AI API to generate content.
 
-First, run the development server:
+## Time Periods
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application defines four time periods:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Morning**: 5:01 AM - 12:00 PM
+- **Afternoon**: 12:01 PM - 5:00 PM
+- **Evening**: 5:01 PM - 10:00 PM
+- **Night**: 10:01 PM - 5:00 AM
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Automatically detects the current time period
+- Time-specific loading animation with flashing symbols
+  - ☀︎ for morning
+  - ☁︎ for afternoon
+  - ☾ for evening
+  - ⋆⁺₊ for night
+- Randomly selects videos from folders based on the current time period
+- Displays personalized greetings and quotes using Deepseek AI
+- Falls back to predefined messages if the API is unavailable
+- Responsive design with time-appropriate video backgrounds
 
-## Learn More
+## Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. Install dependencies:
+   ```
+   flox activate && npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Set up your Deepseek API key:
+   - Edit the `.env.local` file
+   - Replace `your_deepseek_api_key_here` with your actual Deepseek API key
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Run the development server:
+   ```
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Customization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can customize the application by:
+
+- Adding more videos to the appropriate folders in the `public` directory:
+  - `public/day/` for morning videos (5:01 AM - 12:00 PM)
+  - `public/afternoon/` for afternoon videos (12:01 PM - 5:00 PM)
+  - `public/evening/` for evening videos (5:01 PM - 10:00 PM)
+  - `public/night/` for night videos (10:01 PM - 5:00 AM)
+- Modifying the fallback messages in `app/page.tsx`
+- Adjusting the time period definitions in the `getTimePeriod` function
+- Customizing the loading animation speed in the useEffect hook
+- Changing the fade-in animation duration in `globals.css`
