@@ -1,7 +1,11 @@
 # Hey Moonbeam Greeting App
 
-This Next.js application displays personalized greetings and motivational quotes based on the time of day, using the Deepseek AI API to generate content.
+This Next.js application displays celestial greetings and inspirational quotes based on the time of day, using the Deepseek AI API to generate content.
 
+[Demo video](https://youtu.be/4i1nBDi0lqw)
+
+Screenshot:
+![](/public/luffy.png)
 ## Time Periods
 
 The application defines four time periods:

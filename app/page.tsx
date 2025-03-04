@@ -48,12 +48,15 @@ const fetchDeepseekMessage = async (timePeriod: string): Promise<{greeting: stri
             role: "system",
             content: "You are a supportive entity who generates celestial greetings and inspirational quotes. " +
             "example: Goodnight moonbeam. Progress isn't progress if you don't get to see it tomorrow, I love you. " +
-            "example 2: Still awake moonbeam? you need to brush teeth take pills and pass out right now. ily <3 " +
+            "example 2: still awake moonbeam? you need to brush teeth take pills and pass out right now. ily <3 " +
             "example 3: good morning sunbeam let's see what we can achieve today! ily! " +
             "example 4: hey sunbeam, time to take your coffee and drink your pills and prime your brain to predict good things for today. I love you " +
             "example 5: Good evening moonbeam :) We r out watching the planets 🌌🌃🌒 " +
+            "example 6: Gm sunbeam!" + 
+            "example 7: hey starlight. affection is all you need." +
+            "example 8: Good night moonbeam, here's to tomorrow being a better day, ily." +
             "The current local time is: " + timePeriod + ". (morning: 5:01am-12pm, afternoon: 12:01pm-5pm, " +
-            "evening: 5:01pm-10pm, night: 10:01pm-5am). Output a short endearing greeting such as moonbeam, starlight, skybeam, based on the time period, and a short quote of 1 sentence. Follow sub specie aeternitatis, using a gentle, kind, eternal tone."
+            "evening: 5:01pm-10pm, night: 10:01pm-5am). Output a short endearing greeting such as moonbeam, starlight, skybeam or similar, based on the time period, and a short quote of 1 sentence with linguistic conciseness and informality seen on the internet. Do not use quotation marks. Follow sub specie aeternitatis, using a gentle, kind, eternal tone."
           },
           {
             role: "user",
@@ -218,14 +221,35 @@ export default function Home() {
   
   // Effect for initial message fetch and video selection - runs only once on component mount
   useEffect(() => {
+    // Use India Standard Time (IST) for testing purposes
     const now = new Date();
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const initialTimePeriod = getTimePeriod(hour, minute);
+    // Calculate IST hours and minutes (UTC+5:30)
+    const utcHour = now.getUTCHours();
+    const utcMinute = now.getUTCMinutes();
     
-    // Set initial time state
+    // Add 5 hours and 30 minutes for IST
+    let istHour = utcHour + 5;
+    let istMinute = utcMinute + 30;
+    
+    // Adjust if minutes overflow
+    if (istMinute >= 60) {
+      istHour += 1;
+      istMinute -= 60;
+    }
+    
+    // Adjust if hours overflow
+    if (istHour >= 24) {
+      istHour -= 24;
+    }
+    
+    const initialTimePeriod = getTimePeriod(istHour, istMinute);
+    
+    // Format IST time string
+    const istTimeString = `IST: ${istHour.toString().padStart(2, '0')}:${istMinute.toString().padStart(2, '0')}`;
+    
+    // Set initial time state with IST time
     setTimeState({
-      currentTime: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      currentTime: istTimeString,
       timePeriod: initialTimePeriod
     });
     
@@ -236,16 +260,36 @@ export default function Home() {
   
   // Separate effect for time updates - runs continuously
   useEffect(() => {
-    // Function to update just the time
+    // Function to update just the time using IST
     const updateTime = () => {
       const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const newTimePeriod = getTimePeriod(hour, minute);
+      // Calculate IST hours and minutes (UTC+5:30)
+      const utcHour = now.getUTCHours();
+      const utcMinute = now.getUTCMinutes();
       
-      // Update time state, but don't fetch new messages
+      // Add 5 hours and 30 minutes for IST
+      let istHour = utcHour + 5;
+      let istMinute = utcMinute + 30;
+      
+      // Adjust if minutes overflow
+      if (istMinute >= 60) {
+        istHour += 1;
+        istMinute -= 60;
+      }
+      
+      // Adjust if hours overflow
+      if (istHour >= 24) {
+        istHour -= 24;
+      }
+      
+      const newTimePeriod = getTimePeriod(istHour, istMinute);
+      
+      // Format IST time string
+      const istTimeString = `IST: ${istHour.toString().padStart(2, '0')}:${istMinute.toString().padStart(2, '0')}`;
+      
+      // Update time state with IST time, but don't fetch new messages
       setTimeState({
-        currentTime: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        currentTime: istTimeString,
         timePeriod: newTimePeriod
       });
     };
