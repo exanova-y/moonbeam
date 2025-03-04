@@ -6,6 +6,9 @@ This Next.js application displays celestial greetings and inspirational quotes b
 
 Screenshot:
 ![](/public/luffy.png)
+
+**Note:** Public version is feature-limited.
+
 ## Time Periods
 
 The application defines four time periods:
